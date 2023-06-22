@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.mapper.StudentMapper">
+
+    <resultMap id="studentResultMap" type="com.student.domain.Student">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="javascore" column="javascore"/>
+        <result property="gaoshuscore" column="gaoshuscore"/>
+        <result property="englishscore" column="englishscore"/>
+        <result property="total" column="total"/>
+    </resultMap>
+    <insert id="addStudent">
+        insert into tb_student (id, name, sex, age, javascore, gaoshuscore, englishscore)
+        values (#{id},#{name},#{sex},#{age},#{javascore},#{gaoshuscore},#{englishscore});
+    </insert>
+    <update id="updateStudent" >
+        update tb_student
+        <set>
+            <if test="name!=null and name!=''">
+                name = #{name},
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex = #{sex},
+            </if>
+            <if test="age!=null and age!=''">
+                age = #{age},
+            </if>
+            <if test="javascore!=null">
+                javascore = #{javascore},
+            </if>
+            <if test="gaoshuscore!=null">
+                gaoshuscore = #{gaoshuscore},
+            </if>
+            <if test="englishscore!=null">
+                englishscore = #{englishscore},
+            </if>
+        </set>
+        where id = #{id};
+    </update>
+    <delete id="deleteStudentById">
+        delete
+        from tb_student
+        where id = #{id};
+    </delete>
+
+    <select id="selectAllStudent" resultMap="studentResultMap">
+        select *
+        from tb_student;
+    </select>
+    <select id="getStudentByName" parameterType="string" resultMap="studentResultMap">
+        select *
+        from tb_student where name = #{name};
+    </select>
+    <select id="getStudentById" parameterType="string" resultMap="studentResultMap">
+        select *
+        from tb_student where id = #{id};
+    </select>
+
+
+</mapper>
